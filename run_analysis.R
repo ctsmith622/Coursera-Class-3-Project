@@ -35,7 +35,7 @@ rm(i,j)
 #set working directory back to the original
 setwd(original_wd)
 
-#create the initial merged data sets by adding the test and training Y values to their respective X values.
+#create the initial merged data sets by adding the test and training Y values and subject labels to their respective X values.
 #Then add the rows of the combined test set to the end of the training set
 merged_data <- rbind(cbind(X_train.txt, subject_train.txt, y_train.txt), cbind(X_test.txt, subject_test.txt, y_test.txt))
 
@@ -45,10 +45,10 @@ activities <- read.table("./UCI HAR Dataset/activity_labels.txt", stringsAsFacto
 #now re-label the activity column (column 563) with the labels contained in 'activities'
 merged_data[,563] <- sapply(merged_data[,563], function(x) activities[x])
 
-#read in the text file containing the names of the features
+#read in the text file containing the names of the variables
 features <- read.table("./UCI HAR Dataset/features.txt", stringsAsFactors = F, header = F)[,2]
 
-#extract the indices of the feature names that contain reference to either mean or standard deviation
+#extract the indices of the variable names that contain reference to either mean or standard deviation
 mean_or_std_boolean <- sapply(features, function(x) grepl(pattern = "mean", x = tolower(x)) | grepl(pattern = "std", x = tolower(x)))
 mean_or_std_indices <- which(mean_or_std_boolean)
 
@@ -56,20 +56,19 @@ mean_or_std_indices <- which(mean_or_std_boolean)
 #   the columns containing the activity label and the subject number
 mean_std_data <- merged_data[, c(mean_or_std_indices, 562, 563)]
 
-#assign descriptive names to the columns of the new dataframe
+#assign descriptive names to the columns of the new dataframe using the variable names from 'features'
 names(mean_std_data) <- c(features[mean_or_std_indices], "subject", "activity")
 
-head(mean_std_data)
 
-
-#finally create a new tidy dataset that contains the mean for each variable for each subject for each activity
-#Start by creating a new combined variable representing both the subject number and the activity being performed
+#Begin the final step of creating a new tidy dataset that contains the mean for each variable for each unique subject-activity pair
+#Start by creating a new combined variable that concatenates the subject number and the activity being performed
 subject_activity <- paste(mean_std_data$subject, mean_std_data$activity)
 
 #now use that new variable as the grouping factor to calculate the mean for all the numeric variables
 #   the tapply part below calculates the mean for each subject-activity pair within a single column
 #   the sapply function simply applies the tapply bit to each column in 'mean_std_data'. The list operator 'sapply' works here because
 #     a dataframe is really just a list of vectors.
+#   I subtract out columns 87 and 88 in the call to sapply because they are non-numeric. I will re-assign those values later using tidyr
 tidy_means <- as.data.frame(sapply(mean_std_data[, -c(87:88)], function(x) tapply(x, INDEX = subject_activity, FUN = mean)))
 
 #set the row names (subject-activity pairs) to a column so that it can be easily accessed
@@ -78,6 +77,8 @@ tidy_means$subj_act <- row.names(tidy_means)
 #finally use tidyr to split the subject-activity pairs back into the separate subject and activity labels
 library(tidyr)
 tidy_means_final <- separate(tidy_means, col = subj_act, into = c("subject", "activity"), sep = " ")
+
+#rearrange columns to put subject number and activity label in the first two columns
 tidy_means_final <- tidy_means_final[, c(87, 88, 1:86)]
 
 #export as .txt file named tidy_means.txt
