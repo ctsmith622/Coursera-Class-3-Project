@@ -69,6 +69,9 @@ The actions I took to arrive at the final tidy dataset are as follows:
 
 #####Requirement #5 fulfilled: each column now contains the mean value of each mean or standard deviation variable for each unique subject-activity pair. 
 
+
+#####Additional note: the final dataset is tidy now that subject and activity have been split back up into separate columns. Specifically, each column refers to one variable (a type of motion, subject #, or activity label) and each row represents a single observation. This can be checked by looking at the included copy of tidy_means.txt in this repository.
+
 ##End of analysis
 
 
