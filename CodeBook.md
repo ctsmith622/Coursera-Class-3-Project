@@ -28,9 +28,9 @@ The new tidy dataset has had the following changes made to it from the original 
   *  *see codebook for original data below*
 
 
-
+================================================================================================================
+================================================================================================================
 #Codebook for original data
-==================================================================
 Human Activity Recognition Using Smartphones Dataset
 Version 1.0
 ==================================================================
