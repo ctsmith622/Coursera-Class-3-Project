@@ -54,7 +54,7 @@ The actions I took to arrive at the final tidy dataset are as follows:
     * Put these columns into a new dataset which will be our most current merged dataset. This is now the data we are working to improve.
     * At this point, we have a dataframe containing subject numbers,  descriptive activity labels, and all variables relating to mean or standard deviation. However, the mean and standard deviation variables still have generic column names like V1 and V2, so that's the next issue to address.
 
-#####Requirement #2 fulfilled: all remaining columns are either the subject number, the activity label, or the contain the word "mean" or "std"
+#####Requirement #2 fulfilled: all remaining columns are either the subject number, the activity label, or they contain the word "mean" or "std"
 
 13.  Assign the descriptive variable names from features.txt above as the column names in this most current merged dataset. Manually set the column names for the subject number and activity label to "subject" and "activity" respectively. This dataset is now our most current merged dataset.
 
