@@ -1,11 +1,42 @@
+#Introduction
+
+Since I do not have domain knowledge of human activity recognition nor do I have a complete understanding of all features that were extracted in the original dataset, I defer to the original publishers on these matters. The original descriptions of the features and methodology for data collection are provided beneath my description of the new, tidy dataset I have created for this assignment.
+
+***Disclaimer: All credit for the descriptions contained in the "Codebook for original data" section below belongs to the original publishers and I take no credit for them whatsoever. My own codebook, describing the variables I created, is contained in the first section called "Codebook for tidy_means.txt". For the reference information for the original data codebook and dataset, please see the README.md file in this repository.***
+
 #Codebook for tidy_means.txt
+
+The new tidy dataset has had the following changes made to it from the original dataset:
+
+1.  The only variable that were kept had either the word "mean" or "std" in them which I used as a determination of whether or not the variable related to the measurement of a mean or standard deviation.
+    *  I found some variables that had the word "mean" in them that were not necessarily measurements of a mean themselves, like "angle(Y,gravityMean)". However, after careful consideration I determined that because the mean for a gravity measurement was used, this still indirectly relates to a mean measurement, and so therefor I left these variables in my final tidy dataset.
+2.  For specific variable descriptions, I refer the reader to the original feature descriptions below. **However, note that all measurements in the final tidy dataset represent mean values of the original data which corresponded to a given subject and activity. E.g., in the tidy dataset, the variable "angle(Y,gravityMean)" is really the mean of the original "angle(Y,gravityMean)" column values that correspond to a given subject and activity.**
+
+###Variable type summaries in tidy_means.txt
+
+**Subject**
+  *  Datatype: Integer
+  *  Description: the id for the subject to which each entry corresponds
+  *  Possible values: 1, 2, ..., 29, 30.
+
+**Activity**
+  *  Datatype: String
+  *  A description of the type of activity the subject was performing at the time the readings were collected.
+  *  Possible values: "LAYING", "SITTING", "STANDING", "WALKING", "WALKING_DOWNSTAIRS", "WALKING_UPSTAIRS".
+
+**All other variables**
+  *  *see codebook for original data below*
+
+
+
+#Codebook for original data
 ==================================================================
-  Human Activity Recognition Using Smartphones Dataset
+Human Activity Recognition Using Smartphones Dataset
 Version 1.0
 ==================================================================
   Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
 Smartlab - Non Linear Complex Systems Laboratory
-DITEN - Universit‡ degli Studi di Genova.
+DITEN - Universit√† degli Studi di Genova.
 Via Opera Pia 11A, I-16145, Genoa, Italy.
 activityrecognition@smartlab.ws
 www.smartlab.ws
